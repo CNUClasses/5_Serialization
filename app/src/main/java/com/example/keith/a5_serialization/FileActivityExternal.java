@@ -105,7 +105,7 @@ public class FileActivityExternal extends Activity {
         if (isExternalStorageWritable()) {
             File dir = getExternalFilesDirAllApiLevels(this.getPackageName());
             File file = new File(dir, FILENAME);
-            writeStringAsFile(et.getText().toString(), file);
+            KP_fileIO.writeStringAsFile(et.getText().toString(), file);
             et.setText("");
             etLocation.setText(FileActivityExternal.getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
             etFileName.setText(FILENAME);
@@ -121,7 +121,7 @@ public class FileActivityExternal extends Activity {
             File dir = getExternalFilesDirAllApiLevels(this.getPackageName());
             File file = new File(dir, FILENAME);
             if (file.exists() && file.canRead()) {
-                et.setText(readFileAsString(file));
+                et.setText(KP_fileIO.readFileAsString(file));
                 etLocation.setText(FileActivityExternal.getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
                 etFileName.setText(FILENAME);
                 Log.d(TAG, "File read");
@@ -134,60 +134,6 @@ public class FileActivityExternal extends Activity {
         }
     }
 
-    /**
-     * Read file as String, return null if file is not present or not readable.
-     *
-     * @param file
-     * @return
-     */
-    public static String readFileAsString(final File file) {
-        StringBuilder sb = null;
-        try {
-            if ((file != null) && file.canRead()) {
-                sb = new StringBuilder();
-                String line = null;
-                BufferedReader in = new BufferedReader(new FileReader(file), 1024);
-                try {
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-                } finally {
-                    in.close();
-                }
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "Error reading file " + e.getMessage(), e);
-        }
-        if (sb != null) {
-            return sb.toString();
-        }
-        return null;
-    }
 
-    /**
-     * Replace entire File with contents of String, return true on success,
-     * false on failure.
-     *
-     * @param fileContents
-     * @param file
-     * @return
-     */
-    public static boolean writeStringAsFile(final String fileContents, final File file) {
-        boolean result = false;
-        try {
-            if (file != null) {
-                file.createNewFile(); // ok if returns false, overwrite
-                Writer out = new BufferedWriter(new FileWriter(file), 1024);
-                try {
-                    out.write(fileContents);
-                } finally {
-                    out.close();
-                }
-                result = true;
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "Error writing string data to file " + e.getMessage(), e);
-        }
-        return result;
-    }
+
 }

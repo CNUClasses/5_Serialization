@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,6 +26,7 @@ public class FileActivityInternal extends Activity {
     private static final String FILENAME = "datafile.txt";
     private static final String TAG = "datafile.txt";
     private static final String LINE_SEP = System.getProperty("line.separator");
+    private String dir;
     private TextView etLocation;
     private TextView etFileName;
     private EditText et;
@@ -46,6 +48,7 @@ public class FileActivityInternal extends Activity {
         String myString = extras.getString("Some String", "But don't know what it will be");
         long myLong = extras.getLong("Some long");
 
+        setFileLoc();
 
     }
 
@@ -57,60 +60,25 @@ public class FileActivityInternal extends Activity {
     }
 
     private void setFileLoc() {
-        etLocation.setText(this.getFilesDir().getAbsolutePath());
+        dir = this.getFilesDir().getAbsolutePath();
+        etLocation.setText(dir);
         etFileName.setText(FILENAME);
     }
 
     public void doSave(View v) {
-        String data = et.getText().toString();
+        File file = new File(dir, FILENAME);
+        KP_fileIO.writeStringAsFile(et.getText().toString(), file);
 
-        FileOutputStream fos = null;
-        try {
-            // note that there are many modes you can use
-            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            try {
-                fos.write(data.getBytes());
-            } finally {
-                fos.close();
-                et.setText("");
-                setFileLoc();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "File not found", e);
-        } catch (IOException e) {
-            Log.e(TAG, "IO problem", e);
-        }
+        et.setText("");
     }
 
     public void doGet(View v) {
-        FileInputStream fis = null;
-        Scanner scanner = null;
-        StringBuilder sb = new StringBuilder();
-        try {
-            fis = openFileInput(FILENAME);
-            scanner = new Scanner(fis);
-            try {
-                while (scanner.hasNextLine()) {
-                    sb.append(scanner.nextLine());
-                }
-            } finally {
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        //why bother?
-                    }
-                }
-                if (scanner != null) {
-                    scanner.close();
-                }
-                et.setText(sb.toString());
-                setFileLoc();
-            }
+            File file = new File(dir, FILENAME);
 
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "File not found", e);
-        }
+            if (file.exists() && file.canRead()) {
+                et.setText(KP_fileIO.readFileAsString(file));
+                Log.d(TAG, "File read");
+            }
     }
 
     /* (non-Javadoc)
