@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DemoInternalExternalStorage</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_pref_start">5_InternalExternalStorage</string>
+    <string name="title_activity_file">FileActivity</string>
+    <string name="fileLoc"><b>File Location:</b></string>
+   <string name="fileName"><b>File Name:</b></string>
+    
+</resources>
