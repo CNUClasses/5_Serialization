@@ -49,7 +49,6 @@ public class FileActivityInternal extends Activity {
         long myLong = extras.getLong("Some long");
 
         setFileLoc();
-
     }
 
     @Override
@@ -68,7 +67,6 @@ public class FileActivityInternal extends Activity {
     public void doSave(View v) {
         File file = new File(dir, FILENAME);
         KP_fileIO.writeStringAsFile(et.getText().toString(), file);
-
         et.setText("");
     }
 
