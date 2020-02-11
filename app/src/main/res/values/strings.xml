@@ -6,6 +6,6 @@
     <string name="title_activity_pref_start">5_InternalExternalStorage</string>
     <string name="title_activity_file">FileActivity</string>
     <string name="fileLoc"><b>File Location:</b></string>
-   <string name="fileName"><b>File Name:</b></string>
-    
+    <string name="fileName"><b>File Name:</b></string>
+
 </resources>

@@ -61,7 +61,6 @@ public class FileActivityExternal extends Activity {
         etFileName.setText(FILENAME);
     }
 
-
     /**
      * Use Environment to check if external storage is writable.
      *
@@ -91,12 +90,12 @@ public class FileActivityExternal extends Activity {
      * @param packageName
      * @return
      */
-    public static File getExternalFilesDirAllApiLevels(final String packageName) {
+    public  File getExternalFilesDirAllApiLevels(final String packageName) {
         return getExternalDirAllApiLevels(packageName, EXT_STORAGE_FILES_PATH_SUFFIX);
     }
 
-    private static File getExternalDirAllApiLevels(final String packageName, final String suffixType) {
-        File dir = new File(Environment.getExternalStorageDirectory() + EXT_STORAGE_PATH_PREFIX + packageName + suffixType);
+    private File getExternalDirAllApiLevels(final String packageName, final String suffixType) {
+        File dir = new File(this.getExternalFilesDir(null).getAbsolutePath()+ EXT_STORAGE_PATH_PREFIX + packageName + suffixType);
         dir.mkdirs();
         return dir;
     }
@@ -107,7 +106,7 @@ public class FileActivityExternal extends Activity {
             File file = new File(dir, FILENAME);
             KP_fileIO.writeStringAsFile(et.getText().toString(), file);
             et.setText("");
-            etLocation.setText(FileActivityExternal.getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
+            etLocation.setText(getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
             etFileName.setText(FILENAME);
         } else {
             etLocation.setText("External storage not writable");
@@ -122,7 +121,7 @@ public class FileActivityExternal extends Activity {
             File file = new File(dir, FILENAME);
             if (file.exists() && file.canRead()) {
                 et.setText(KP_fileIO.readFileAsString(file));
-                etLocation.setText(FileActivityExternal.getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
+                etLocation.setText(getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
                 etFileName.setText(FILENAME);
                 Log.d(TAG, "File read");
             } else {
