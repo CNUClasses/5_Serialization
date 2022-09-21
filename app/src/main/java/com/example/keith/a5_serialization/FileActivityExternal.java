@@ -56,12 +56,7 @@ public class FileActivityExternal extends Activity {
         return true;
     }
 
-    private void setFileLoc() {
-        etLocation.setText(this.getFilesDir().getAbsolutePath());
-        etFileName.setText(FILENAME);
-    }
-
-    /**
+     /**
      * Use Environment to check if external storage is writable.
      *
      * @return
