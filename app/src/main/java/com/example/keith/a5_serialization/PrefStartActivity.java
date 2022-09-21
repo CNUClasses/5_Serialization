@@ -40,10 +40,6 @@ public class PrefStartActivity extends Activity {
 
     public void doFilesInternal(View v) {
         Intent intent = new Intent(this, FileActivityInternal.class);
-        intent.putExtra("Some boolean", false);
-        intent.putExtra("Some char", 'a');
-        intent.putExtra("Some String", "But don't know what it will be");
-        intent.putExtra("Some long", 1513423412);
         startActivity(intent);
     }
 

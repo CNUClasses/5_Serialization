@@ -38,24 +38,7 @@ public class FileActivityInternal extends Activity {
         et = (EditText) findViewById(R.id.editText1);
         etLocation = (TextView) findViewById(R.id.textView4);
         etFileName = (TextView) findViewById(R.id.textView5);
-
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            return;
-        }
-        Boolean mybool = extras.getBoolean("Some boolean");
-        char myChar = extras.getChar("Some char");
-        String myString = extras.getString("Some String", "But don't know what it will be");
-        long myLong = extras.getLong("Some long");
-
         setFileLoc();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_file, menu);
-        return true;
     }
 
     private void setFileLoc() {
@@ -77,14 +60,5 @@ public class FileActivityInternal extends Activity {
                 et.setText(KP_fileIO.readFileAsString(file));
                 Log.d(TAG, "File read");
             }
-    }
-
-    /* (non-Javadoc)
-     * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        // TODO Auto-generated method stub
-        super.onSaveInstanceState(outState);
     }
 }

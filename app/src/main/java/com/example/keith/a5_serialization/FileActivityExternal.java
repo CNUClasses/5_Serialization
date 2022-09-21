@@ -31,8 +31,6 @@ public class FileActivityExternal extends Activity {
     private static final String EXT_STORAGE_PATH_PREFIX = "/Android/data/";
     private static final String EXT_STORAGE_FILES_PATH_SUFFIX = "/files/";
     private static final String EXT_STORAGE_CACHE_PATH_SUFFIX = "/cache/";
-
-
     private static final String FILENAME = "datafile.txt";
     private static final String TAG = "FileActivityExternal";
     private static final String LINE_SEP = System.getProperty("line.separator");
@@ -47,13 +45,6 @@ public class FileActivityExternal extends Activity {
         et = (EditText) findViewById(R.id.editText1);
         etLocation = (TextView) findViewById(R.id.textView4);
         etFileName = (TextView) findViewById(R.id.textView5);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_file, menu);
-        return true;
     }
 
      /**
@@ -127,7 +118,4 @@ public class FileActivityExternal extends Activity {
             Log.d(TAG, "External storage not readable");
         }
     }
-
-
-
 }
