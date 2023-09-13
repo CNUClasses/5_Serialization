@@ -36,8 +36,6 @@ public class PrefStartActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
     public void doFilesInternal(View v) {
         Intent intent = new Intent(this, FileActivityInternal.class);
         startActivity(intent);
