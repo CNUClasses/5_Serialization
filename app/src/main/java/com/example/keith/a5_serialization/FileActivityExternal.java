@@ -47,52 +47,25 @@ public class FileActivityExternal extends Activity {
         etFileName = (TextView) findViewById(R.id.textView5);
     }
 
-     /**
-     * Use Environment to check if external storage is writable.
-     *
-     * @return
-     */
-    public static boolean isExternalStorageWritable() {
-        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-    }
-
     /**
      * Use environment to check if external storage is readable.
      *
      * @return
      */
     public static boolean isExternalStorageReadable() {
-        if (isExternalStorageWritable()) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return true;
         }
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED_READ_ONLY);
     }
 
-    /**
-     * Return the recommended external files directory, whether using API level
-     * 8 or lower. (Uses getExternalStorageDirectory and then appends the
-     * recommended path.)
-     *
-     * @param packageName
-     * @return
-     */
-    public  File getExternalFilesDirAllApiLevels(final String packageName) {
-        return getExternalDirAllApiLevels(packageName, EXT_STORAGE_FILES_PATH_SUFFIX);
-    }
-
-    private File getExternalDirAllApiLevels(final String packageName, final String suffixType) {
-        File dir = new File(this.getExternalFilesDir(null).getAbsolutePath()+ EXT_STORAGE_PATH_PREFIX + packageName + suffixType);
-        dir.mkdirs();
-        return dir;
-    }
-
     public void doSave(View v) {
-        if (isExternalStorageWritable()) {
-            File dir = getExternalFilesDirAllApiLevels(this.getPackageName());
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File dir = new File(this.getExternalFilesDir(null).getAbsolutePath());
             File file = new File(dir, FILENAME);
             KP_fileIO.writeStringAsFile(et.getText().toString(), file);
             et.setText("");
-            etLocation.setText(getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
+            etLocation.setText(this.getExternalFilesDir(null).getAbsolutePath().toString());
             etFileName.setText(FILENAME);
         } else {
             etLocation.setText("External storage not writable");
@@ -100,14 +73,12 @@ public class FileActivityExternal extends Activity {
         }
     }
 
-
     public void doGet(View v) {
         if (isExternalStorageReadable()) {
-            File dir = getExternalFilesDirAllApiLevels(this.getPackageName());
-            File file = new File(dir, FILENAME);
+            File file = new File(this.getExternalFilesDir(null).getAbsolutePath(), FILENAME);
             if (file.exists() && file.canRead()) {
                 et.setText(KP_fileIO.readFileAsString(file));
-                etLocation.setText(getExternalFilesDirAllApiLevels(this.getPackageName()).toString());
+                etLocation.setText(this.getExternalFilesDir(null).getAbsolutePath().toString());
                 etFileName.setText(FILENAME);
                 Log.d(TAG, "File read");
             } else {
